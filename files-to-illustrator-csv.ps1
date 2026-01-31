@@ -15,6 +15,8 @@ function Convert-ToSlug {
     return $slug
 }
 
+$host.UI.RawUI.WindowTitle = "Générateur de fichier CSV compatible avec Illustrator"
+
 do {
     $inputColumns = Read-Host "Nombre d'images à remplacer dans le gabarit ?"
 } while (-not ($inputColumns -as [int]) -or [int]$inputColumns -le 0)
@@ -69,6 +71,8 @@ for ($i = 0; $i -lt $files.Count; $i += $ColumnCount) {
 try {
     $rows | Export-Csv -Path $OutputCsv -NoTypeInformation -Encoding UTF8
     Write-Host "✅ Fichier CSV généré avec succès: $OutputCsv" -ForegroundColor Green
+    Start-Sleep -Seconds 3
+    exit
 } catch {
     Write-Host "❌ Une erreur est survenue: $_" -ForegroundColor Red
 }
