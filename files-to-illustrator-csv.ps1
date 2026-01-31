@@ -1,7 +1,7 @@
 param (
     [ValidateRange(1,1000)]
     [int]$ColumnCount = 3,
-    [string[]]$Extensions = @(".jpg", ".png", ".pdf")
+    [string[]]$Extensions = @(".jpg", ".png", ".pdf", ".ai")
 )
 
 function Convert-ToSlug {
@@ -18,13 +18,19 @@ function Convert-ToSlug {
 $host.UI.RawUI.WindowTitle = "Générateur de fichier CSV compatible avec Illustrator"
 
 do {
-    $inputColumns = Read-Host "Nombre d'images à remplacer dans le gabarit du fichier Illustrator ?"
-} while (-not ($inputColumns -as [int]) -or [int]$inputColumns -le 0)
+    $inputColumns = Read-Host "Nombre d'images à remplacer dans le gabarit du fichier Illustrator ? (valeur entre 1 et 1000)"
+} while (-not ($inputColumns -as [int]) -or [int]$inputColumns -le 0 -or [int]$inputColumns -gt 1000)
 
 $currentDirName = Split-Path -Leaf (Get-Location)
 $slugDirName = Convert-ToSlug $currentDirName
 
 $ColumnCount = [int]$inputColumns
+
+# if (-not ($ColumnCount -is [int]) -or [int]$inputColumns -le 0 -or [int]$inputColumns -gt 1000) {
+#     Write-Host "❌ ColumnCount must be a positive number." -ForegroundColor Red
+#     Start-Sleep -Seconds 3
+#     exit
+# }
 
 $timestamp = Get-Date -Format "dd-MM-yyyy_HHmm"
 $OutputCsv = "$timestamp`_$slugDirName.csv"
