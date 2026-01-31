@@ -12,3 +12,7 @@ Invoke-PS2EXE `
     -NoConsole:$true `
     -IconFile files-to-illustrator-csv-icon.ico
 ```
+
+```ps
+# .\script.ps1 -ColumnCount 4 -Extensions jpg,png
+```

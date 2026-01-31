@@ -36,13 +36,6 @@ $files = Get-ChildItem -File |
 Where-Object { $Extensions -contains $_.Extension } |
 Select-Object -ExpandProperty FullName
 
-# Build headers: image1, image2, ..., imageN
-$headers = @()
-for ($i = 1; $i -le $ColumnCount; $i++) {
-    $headers += "@image$i"
-    $headers += "#image$i`_visibilite"
-}
-
 $rows = @()
 
 # Loop over files in chunks of ColumnCount
@@ -69,11 +62,7 @@ for ($i = 0; $i -lt $files.Count; $i += $ColumnCount) {
 # Export to CSV
 try {
     $rows | Export-Csv -Path $OutputCsv -NoTypeInformation -Encoding UTF8
-    Write-Host "✅ Fichier CSV génré avec succès: $OutputCsv" -ForegroundColor Green
-    # Write-Host "`nAppuyer sur une touche pour fermer la fenêtre..."
-    # $x = $host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")
+    Write-Host "✅ Fichier CSV généré avec succès: $OutputCsv" -ForegroundColor Green
 } catch {
     Write-Host "❌ Une erreur est survenue: $_" -ForegroundColor Red
 }
-
-# .\script.ps1 -ColumnCount 4 -Extensions jpg,png
