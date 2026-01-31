@@ -1,4 +1,5 @@
 param (
+    [ValidateRange(1,1000)]
     [int]$ColumnCount = 3,
     [string[]]$Extensions = @(".jpg", ".png", ".pdf")
 )
@@ -23,7 +24,6 @@ $slugDirName = Convert-ToSlug $currentDirName
 
 $ColumnCount = [int]$inputColumns
 
-
 $timestamp = Get-Date -Format "dd-MM-yyyy_HHmm"
 $OutputCsv = "$slugDirName`_$timestamp.csv"
 
@@ -41,13 +41,17 @@ $rows = @()
 # Loop over files in chunks of ColumnCount
 for ($i = 0; $i -lt $files.Count; $i += $ColumnCount) {
     $currentRow = [ordered]@{}
+    $nameCol = "nom"
+    $currentRow[$nameCol] = @()
 
     for ($j = 0; $j -lt $ColumnCount; $j++) {
         $fileIndex = $i + $j
         $imageCol = "@image$($j + 1)"
+        
         $visibilityCol = "#image$($j + 1)_visibilite"
-
+        
         if ($fileIndex -lt $files.Count) {
+            $currentRow[$nameCol] += Convert-ToSlug((Get-Item $files[$fileIndex]).BaseName)
             $currentRow[$imageCol] = $files[$fileIndex]
             $currentRow[$visibilityCol] = $true
         } else {
@@ -55,6 +59,8 @@ for ($i = 0; $i -lt $files.Count; $i += $ColumnCount) {
             $currentRow[$visibilityCol] = $false
         }
     }
+
+    $currentRow[$nameCol] = $currentRow[$nameCol] -join "_"
 
     $rows += [PSCustomObject]$currentRow
 }
