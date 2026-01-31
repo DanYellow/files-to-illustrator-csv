@@ -18,7 +18,7 @@ function Convert-ToSlug {
 $host.UI.RawUI.WindowTitle = "Générateur de fichier CSV compatible avec Illustrator"
 
 do {
-    $inputColumns = Read-Host "Nombre d'images à remplacer dans le gabarit ?"
+    $inputColumns = Read-Host "Nombre d'images à remplacer dans le gabarit du fichier Illustrator ?"
 } while (-not ($inputColumns -as [int]) -or [int]$inputColumns -le 0)
 
 $currentDirName = Split-Path -Leaf (Get-Location)
@@ -27,7 +27,7 @@ $slugDirName = Convert-ToSlug $currentDirName
 $ColumnCount = [int]$inputColumns
 
 $timestamp = Get-Date -Format "dd-MM-yyyy_HHmm"
-$OutputCsv = "$slugDirName`_$timestamp.csv"
+$OutputCsv = "$timestamp`_$slugDirName.csv"
 
 $Extensions = $Extensions | ForEach-Object {
     if ($_ -notmatch '^\.') { ".$_" } else { $_ }
