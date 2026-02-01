@@ -17,12 +17,17 @@ Le script génère les colonnes suivantes :
 ```ps
 Invoke-PS2EXE `
     -InputFile files-to-illustrator-csv.ps1 `
-    -OutputFile generation-csv-illustrator.exe `
+    -OutputFile "Générer CSV pour Illustrator.exe" `
     -NoConsole:$false `
     -title:"Générateur de fichier csv compatible avec Illustrator"`
+    -description "Génère des fichiers CSV compatibles avec Adobe Illustrator" `
     -IconFile files-to-illustrator-csv-icon.ico
 ```
 
 ```ps
 # .\script.ps1 -ColumnCount 4 -Extensions jpg,png
+```
+
+```sh
+magick "files-to-illustrator-csv-icon.png" -define icon:auto-resize=16,32,48,256 files-to-illustrator-csv-icon.ico
 ```
