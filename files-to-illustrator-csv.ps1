@@ -1,4 +1,4 @@
-param (
+﻿param (
     [ValidateRange(1,1000)]
     [int]$ColumnCount = 3,
     [string[]]$Extensions = @(".jpg", ".png", ".pdf", ".ai")
