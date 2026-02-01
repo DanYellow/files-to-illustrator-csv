@@ -35,7 +35,7 @@ Select-Object -ExpandProperty FullName
 
 if (-not $files -or $files.Count -eq 0) {
     Write-Host ""
-    Write-Host "✘ Aucun fichier trouvé avec les extensions suivantes :" -ForegroundColor Red
+    Write-Host "[X] Aucun fichier trouvé avec les extensions suivantes :" -ForegroundColor Red
     Write-Host "   $($Extensions -join ', ')" -ForegroundColor Yellow
     Write-Host "   Dossier : $(Get-Location)" -ForegroundColor DarkGray
     Write-Host ""
@@ -55,7 +55,7 @@ $slugDirName = Convert-ToSlug $currentDirName
 $ColumnCount = [int]$inputColumns
 
 # if (-not ($ColumnCount -is [int]) -or [int]$inputColumns -le 0 -or [int]$inputColumns -gt 1000) {
-#     Write-Host "❌ ColumnCount must be a positive number." -ForegroundColor Red
+#     Write-Host "[X] ColumnCount must be a positive number." -ForegroundColor Red
 #     Start-Sleep -Seconds 3
 #     exit
 # }
@@ -100,12 +100,12 @@ for ($i = 0; $i -lt $files.Count; $i += $ColumnCount) {
 # Export to CSV
 try {
     $rows | Export-Csv -Path $OutputCsv -NoTypeInformation -Encoding UTF8
-    Write-Host "✔ Fichier CSV généré avec succès: $OutputCsv" -ForegroundColor Green
+    Write-Host "[✔] Fichier CSV généré avec succès: $OutputCsv" -ForegroundColor Green
     Start-Sleep -Seconds 3
 
     exit 0
 } catch {
-    Write-Host "✘ Une erreur est survenue: $_" -ForegroundColor Red
+    Write-Host "[X] Une erreur est survenue: $_" -ForegroundColor Red
     Write-Host $_
     Write-Host "Appuyez sur une touche pour fermer…"
     [Console]::ReadKey($true) | Out-Null
