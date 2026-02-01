@@ -25,6 +25,8 @@ $currentPath = Get-Location
 Write-Host "==================================================" -ForegroundColor DarkGray
 Write-Host " $appName" -ForegroundColor Cyan
 Write-Host " Dossier courant : $currentPath" -ForegroundColor Yellow
+Write-Host " "
+Write-Host " **Rappel : Il ne doit pas avoir d'espace ni dans le nom du fichier, ni dans le nom des dossiers**" -ForegroundColor Yellow
 Write-Host "==================================================" -ForegroundColor DarkGray
 Write-Host ""
 
@@ -46,7 +48,7 @@ if (-not $files -or $files.Count -eq 0) {
 }
 
 do {
-    $inputColumns = Read-Host "Nombre d'images à remplacer dans le gabarit du fichier Illustrator ? (valeur entre 1 et 1000)"
+    $inputColumns = Read-Host "Nombre d'images à remplacer dans le gabarit du fichier Illustrator ? (valeur entre 1 et 1000 inclus)"
 } while (-not ($inputColumns -as [int]) -or [int]$inputColumns -le 0 -or [int]$inputColumns -gt 1000)
 
 $currentDirName = Split-Path -Leaf (Get-Location)
@@ -66,7 +68,6 @@ $OutputCsv = "$timestamp`_$slugDirName.csv"
 $Extensions = $Extensions | ForEach-Object {
     if ($_ -notmatch '^\.') { ".$_" } else { $_ }
 }
-
 
 $rows = @()
 
@@ -92,7 +93,7 @@ for ($i = 0; $i -lt $files.Count; $i += $ColumnCount) {
         }
     }
 
-    $currentRow[$nameCol] = $currentRow[$nameCol] -join "_"
+    $currentRow[$nameCol] = $currentRow[$nameCol] -join "__"
 
     $rows += [PSCustomObject]$currentRow
 }
