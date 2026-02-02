@@ -37,9 +37,9 @@ Select-Object -ExpandProperty FullName
 
 if (-not $files -or $files.Count -eq 0) {
     Write-Host ""
-    Write-Host "[X] Aucun fichier trouvé avec les extensions suivantes :" -ForegroundColor Red
-    Write-Host "   $($Extensions -join ', ')" -ForegroundColor Yellow
-    Write-Host "   Dossier : $(Get-Location)" -ForegroundColor DarkGray
+    Write-Host " [X] Aucun fichier trouvé avec les extensions suivantes :" -ForegroundColor Red
+    Write-Host " $($Extensions -join ', ')" -ForegroundColor Yellow
+    Write-Host " Dossier : $(Get-Location)" -ForegroundColor Gray
     Write-Host ""
     Write-Host "Appuyez sur une touche pour fermer…" -ForegroundColor Gray
     [System.Console]::ReadKey($true) | Out-Null
