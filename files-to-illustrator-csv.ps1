@@ -15,19 +15,26 @@ function Convert-ToSlug {
     return $slug
 }
 
-$host.UI.RawUI.WindowTitle = "Générateur de fichier CSV compatible avec Illustrator"
+
+
+$rawUI = $Host.UI.RawUI
+$rawUI.WindowTitle = "Générateur de fichier CSV compatible avec Illustrator"
 
 Clear-Host
 
 $appName = "Générateur de fichier CSV pour Illustrator"
 $currentPath = Get-Location
+$BuildDate = (Get-Item ([System.Diagnostics.Process]::GetCurrentProcess().MainModule.FileName)).LastWriteTime.ToString("dd/MM/yyyy HH:mm:ss")
 
-Write-Host "==================================================" -ForegroundColor DarkGray
-Write-Host " $appName" -ForegroundColor Cyan
+Write-Host "================ $appName ================" -ForegroundColor Cyan
 Write-Host " Dossier courant : $currentPath" -ForegroundColor Yellow
 Write-Host " "
-Write-Host " **Rappel : Il ne doit pas avoir d'espace ni dans le nom du fichier, ni dans le nom des dossiers**" -ForegroundColor Yellow
-Write-Host "==================================================" -ForegroundColor DarkGray
+Write-Host " **Rappels :**" -ForegroundColor Yellow
+Write-Host "  - Il ne doit pas avoir d'espace ni dans le nom du fichier, ni dans le nom des dossiers. Sinon le fichier sera invalide pour Illustrator" -ForegroundColor Yellow
+Write-Host "  - Seuls les fichiers $($Extensions -join ', ') seront pris en compte" -ForegroundColor Yellow
+Write-Host " " -ForegroundColor Yellow
+Write-Host " (Cette fenêtre se fermera automatiquement après génération du fichier)" -ForegroundColor Yellow
+Write-Host "================ Build généré le $BuildDate ================" -ForegroundColor DarkGray
 Write-Host ""
 
 # Get files in the current directory (no folders)
